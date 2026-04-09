@@ -36,18 +36,33 @@ io.on('connection', (socket) => {
     });
 });
 
-// Database Connection
-if (!process.env.MONGO_URI) {
-    console.error('ERROR: MONGO_URI is not defined in .env file');
-    process.exit(1);
-}
-
-mongoose.connect(process.env.MONGO_URI)
-    .then(() => console.log('MongoDB Connected to Atlas'))
-    .catch(err => {
+// Database Connection with caching for Serverless
+let isConnected = false;
+const connectDB = async () => {
+    if (isConnected) return;
+    try {
+        if (!process.env.MONGO_URI) {
+            throw new Error('MONGO_URI is not defined');
+        }
+        const db = await mongoose.connect(process.env.MONGO_URI);
+        isConnected = db.connections[0].readyState;
+        console.log('MongoDB Connected to Atlas');
+    } catch (err) {
         console.error('MongoDB Connection Error:', err);
-        process.exit(1);
-    });
+        throw err;
+    }
+};
+
+// Middleware to ensure DB is connected before any API call
+app.use(async (req, res, next) => {
+    try {
+        await connectDB();
+        next();
+    } catch (err) {
+        res.status(500).json({ error: "Database connection failed", details: err.message });
+    }
+});
+
 
 
 // ============ AUTH ROUTES ============
