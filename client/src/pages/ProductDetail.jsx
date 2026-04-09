@@ -1,3 +1,4 @@
+import API_BASE_URL from "../config";
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -20,7 +21,7 @@ const ProductDetail = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const res = await axios.get(`http://localhost:5001/api/products/${id}`);
+                const res = await axios.get(`${API_BASE_URL}/api/products/${id}`);
                 setProduct(res.data);
                 console.log("Full Product Data received from server:", res.data);
                 if (res.data.specifications) {

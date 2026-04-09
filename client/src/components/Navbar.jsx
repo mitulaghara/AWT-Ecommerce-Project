@@ -1,3 +1,4 @@
+import API_BASE_URL from "../config";
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Menu, ShoppingCart, User, Search, LogOut, UserCircle, Package, X, LayoutDashboard } from 'lucide-react';
@@ -29,7 +30,7 @@ const Navbar = () => {
 
     const fetchProducts = async () => {
         try {
-            const res = await axios.get('http://localhost:5001/api/products');
+            const res = await axios.get(`${API_BASE_URL}/api/products`);
             if (Array.isArray(res.data)) {
                 setAllProducts(res.data);
             }

@@ -1,3 +1,4 @@
+import API_BASE_URL from "../config";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useCart } from '../context/CartContext';
@@ -34,7 +35,7 @@ const Shop = () => {
     const fetchProducts = async () => {
         try {
             setLoading(true);
-            const res = await axios.get('http://localhost:5001/api/products');
+            const res = await axios.get(`${API_BASE_URL}/api/products`);
             setProducts(res.data);
             setFilteredProducts(res.data);
         } catch (err) {

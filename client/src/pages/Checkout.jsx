@@ -1,3 +1,4 @@
+import API_BASE_URL from "../config";
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
@@ -49,7 +50,7 @@ const Checkout = () => {
                 status: 'Pending'
             };
 
-            await axios.post('http://localhost:5001/api/orders', orderData, {
+            await axios.post(`${API_BASE_URL}/api/orders`, orderData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
