@@ -70,4 +70,4 @@ The application is optimized for deployment on **Vercel**.
 
 **Mitul Aghara**
 - GitHub: [@mitulaghara](https://github.com/mitulaghara)
-- Project: AWT Final Project
+- Project: Mitul's Market
